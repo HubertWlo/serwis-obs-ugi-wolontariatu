@@ -1,0 +1,71 @@
+@page
+@model IndexUzytkownikModel
+@{
+    ViewData["Title"] = "Lista u¿ytkowników";
+    Request.Cookies.TryGetValue("UserId", out string id);
+    Request.Cookies.TryGetValue("UserRole", out string rola);
+    ViewData["Title"] = "Lista U¿ytkowników";
+    if (rola == "Wolontariusz")
+    {
+        Layout = "_Layout_wolontariusz";
+    }
+    else if (rola == "Pracownik")
+    {
+        Layout = "_Layout_pracownik";
+    }
+    else if (rola == "Opiekun")
+    {
+        Layout = "_Layout_opiekun";
+    }
+
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Lista u¿ytkowników zarejestrowanych w serwisie</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Login
+            </th>
+            <th>
+                Rola
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Uzytkownicy) 
+        {
+            @if (int.TryParse(id, out int userIdInt) && userIdInt != item.Id)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Login)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rola)
+                    </td>
+                    @if (rola == "Pracownik")
+                    {
+                        <td>
+                            <div class="form-group">
+                                <form method="post">
+                                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-primary">Usuñ u¿ytkownika</a>
+                                    <input type="hidden" id="id" name="id" value="@item.Id" />
+                                    <button type="submit" class="btn btn-primary" name="uprawnienie" value="Wolontariusz">Nadaj uprawnienia wolontariusza</button>
+                                    <button type="submit" class="btn btn-primary" name="uprawnienie" value="Opiekun">Nadaj uprawnienia opiekuna</button>
+                                    <button type="submit" class="btn btn-primary" name="uprawnienie" value="Pracownik">Nadaj uprawnienia pracownika</button>
+                                </form>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </tbody>
+</table>

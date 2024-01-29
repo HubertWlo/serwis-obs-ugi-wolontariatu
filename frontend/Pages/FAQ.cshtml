@@ -1,0 +1,75 @@
+@page
+@model FAQModel
+@{
+    ViewData["Title"] = "FAQ";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+
+<b>
+    <strong>
+        Czym zajmuje siê nasza fundacja?
+    </strong>
+</b>
+<p>
+    Nasza fundacja specjalizuje siê w œwiadczeniu pomocy i wsparcia dla osób starszych oraz osób z niepe³nosprawnoœciami. Dzia³amy, aby poprawiæ jakoœæ ¿ycia naszych podopiecznych, dostarczaj¹c im ró¿norodne us³ugi i pomoc w codziennym funkcjonowaniu.
+</p>
+<b>
+    <strong>
+        Jakie us³ugi oferujemy dla osób starszych?
+    </strong>
+</b>
+<p>
+    Nasza fundacja dostarcza szeroki zakres us³ug, takich jak opieka domowa, dostarczanie posi³ków, pomoc w codziennych czynnoœciach, aktywizacja seniorów oraz organizacja ró¿norodnych wydarzeñ kulturalnych i rekreacyjnych. Naszym celem jest umo¿liwienie starszym osobom prowadzenia samodzielnych i pe³nowartoœciowych ¿yci.
+</p>
+<b>
+    <strong>
+        W jaki sposób wspieramy osoby z niepe³nosprawnoœciami?
+    </strong>
+</b>
+<p>
+    Dla osób z niepe³nosprawnoœciami oferujemy spersonalizowane us³ugi, obejmuj¹ce wsparcie opiekuñcze, dostosowywanie œrodowiska, pomoc w codziennych zadaniach oraz organizacjê zajêæ terapeutycznych. D¹¿ymy do stworzenia inkluduj¹cego œrodowiska, które umo¿liwia naszym podopiecznym pe³ne uczestnictwo w spo³eczeñstwie.
+</p>
+<b>
+    <strong>
+        Jak mo¿na ubiegaæ siê o wsparcie naszej fundacji?
+    </strong>
+</b>
+<p>
+    Aby skorzystaæ z naszych us³ug, prosimy o kontakt z naszym biurem. Nasz personel jest dostêpny, aby udzieliæ informacji na temat procesu ubiegania siê o pomoc oraz aby omówiæ indywidualne potrzeby i oczekiwania.
+</p>
+<b>
+    <strong>
+        W jaki sposób mo¿na wesprzeæ nasz¹ fundacjê?
+    </strong>
+</b>
+<p>
+    Nasza fundacja dzia³a dziêki wsparciu spo³ecznoœci i darczyñców. Mo¿esz wesprzeæ nasze dzia³ania, ofiarowuj¹c darowiznê, zostaj¹c wolontariuszem lub pomagaj¹c w organizacji wydarzeñ charytatywnych. Ka¿da forma wsparcia przyczynia siê do poprawy jakoœci ¿ycia osób, którym s³u¿ymy.
+</p>
+<b>
+    <strong>
+        Jakie s¹ cele naszej fundacji na przysz³oœæ?
+    </strong>
+</b>
+<p>
+    Naszym g³ównym celem jest rozwijanie i poszerzanie zakresu œwiadczonych us³ug, aby dotrzeæ do wiêkszej liczby osób wymagaj¹cych pomocy. Planujemy równie¿ nawi¹zywanie wspó³pracy z lokalnymi spo³ecznoœciami oraz instytucjami, aby skuteczniej realizowaæ nasz¹ misjê wsparcia dla osób starszych i z niepe³nosprawnoœciami.
+</p>
+W razie innych pytañ zachêcamy do kontaktu.

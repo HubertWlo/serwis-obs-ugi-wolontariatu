@@ -1,0 +1,66 @@
+@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Polityka Prywatnoœci";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+<p>
+    Dane osobowe naszych u¿ytkowników s¹ dla nas wa¿ne, dlatego dbamy o ich prywatnoœæ. Niniejsza Polityka Prywatnoœci ma na celu wyjaœnienie, jak gromadzimy, u¿ywamy, przetwarzamy oraz chronimy Twoje dane osobowe. Prosimy o uwa¿ne zapoznanie siê z poni¿szymi zasadami.
+
+</p>
+<p>
+    <b>
+        Gromadzenie Danych Osobowych:
+    </b> 
+    Gromadzimy dane osobowe wy³¹cznie wtedy, gdy s¹ one nam dobrowolnie udostêpniane, na przyk³ad poprzez formularze rejestracyjne, zapytania kontaktowe czy korzystanie z naszych us³ug.
+</p>
+<p>
+    <b>
+        Rodzaje Gromadzonych Danych:
+    </b>
+    Mo¿emy zbieraæ dane takie jak imiê, nazwisko, adres e-mail, numer telefonu oraz inne informacje, które dobrowolnie nam udostêpniasz.
+</p>
+<p>
+    <b>
+        Cel Gromadzenia Danych:
+    </b>
+    Dane osobowe s¹ gromadzone w celu umo¿liwienia dostêpu do naszych us³ug, odpowiadania na zapytania, œwiadczenia pomocy i obs³ugi klienta, a tak¿e w celach statystycznych i analizy.
+</p>
+<p>
+    <b>
+        Udostêpnianie Danych Osobowych:
+    </b>
+    Nie udostêpniamy danych osobowych stronom trzecim bez wyraŸnej zgody u¿ytkownika, z wyj¹tkiem sytuacji, w których jest to niezbêdne do œwiadczenia us³ug (np. partnerzy techniczni) lub w celu spe³nienia obowi¹zków prawnych.
+</p>
+<p>
+    <b>
+        Prawo do Kontroli Danych Osobowych:
+    </b>
+    Masz prawo dostêpu do swoich danych osobowych, ich poprawiania, usuwania lub przenoszenia. Mo¿esz równie¿ wycofaæ zgodê na przetwarzanie danych w dowolnym momencie.
+</p>
+<p>
+    <b>
+        Zmiany w Polityce Prywatnoœci:
+    </b>
+    Niniejsza Polityka Prywatnoœci mo¿e podlegaæ zmianom. Wszelkie zmiany bêd¹ publikowane na tej stronie. Rekomendujemy regularne sprawdzanie polityki prywatnoœci w celu œledzenia wszelkich aktualizacji.
+</p>
+Jeœli masz pytania dotycz¹ce naszej Polityki Prywatnoœci lub przetwarzania danych osobowych, skontaktuj siê z nami korzystaj¹c z informacji podanych na naszej stronie kontaktowej. Dziêkujemy za zaufanie i wybór naszych us³ug!

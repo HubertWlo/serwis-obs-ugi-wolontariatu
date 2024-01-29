@@ -1,0 +1,29 @@
+﻿@using frontend.Models
+@{
+    var isUserLoggedIn = Context.Request.Cookies.TryGetValue("UserId", out string userId);
+    Context.Request.Cookies.TryGetValue("UserLogin", out string login);
+}
+
+<ul class="navbar-nav">
+    @{
+        if (isUserLoggedIn)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Uzytkownik/Logout">Witaj @login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Uzytkownik/Logout">Wyloguj</a>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Uzytkownik/Create">Zarejestruj się</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-page="/Uzytkownik/Login">Zaloguj</a>
+            </li>
+        }
+    }
+
+</ul>

@@ -1,0 +1,67 @@
+@page
+@model PomocModel
+@{
+    ViewData["Title"] = "Jak otrzymaæ pomoc";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <ul>
+        <li>
+            <b>
+                Skontaktuj siê z nami:
+            </b>
+            <br />
+            Skorzystaj z informacji kontaktowej podanej na stronie. Opisz swoj¹ sytuacjê oraz rodzaj pomocy, jakiej potrzebujesz.
+        </li>
+        <li>
+            <b>
+                PrzeprowadŸ rozmowê konsultacyjn¹:
+            </b>
+            <br />
+            Po otrzymaniu Twojego zapytania, nasz zespó³ skontaktuje siê z Tob¹, aby przeprowadziæ rozmowê konsultacyjn¹. Celem rozmowy jest zrozumienie Twoich potrzeb, sytuacji ¿yciowej oraz okreœlenie, w jaki sposób mo¿emy Ci pomóc.
+        </li>
+        <li>
+            <b>
+                Przygotuj dokumenty niezbêdne do wniosku:
+            </b>
+            <br />
+            W zale¿noœci od rodzaju pomocy, któr¹ potrzebujesz, mo¿esz byæ poproszony o dostarczenie okreœlonych dokumentów potwierdzaj¹cych Twoj¹ sytuacjê. Przygotuj niezbêdne informacje, aby proces ubiegania siê o pomoc przebiega³ sprawnie.
+        </li>
+        <li>
+            <b>
+                Z³ó¿ wniosek:
+            </b>
+            <br />
+            Na podstawie przeprowadzonej rozmowy oraz zebranych dokumentów, bêdziesz poproszony(-a) o z³o¿enie oficjalnego wniosku o pomoc. Wniosek ten umo¿liwi nam jeszcze skuteczniejsze dostosowanie rodzaju pomocy do Twoich konkretnych potrzeb.
+        </li>
+        <li>
+            <b>
+                Otrzymaj wsparcie:
+            </b>
+            <br />
+            Po zatwierdzeniu wniosku, otrzymasz informacje dotycz¹ce planu dzia³añ. Nasz zespó³ jest dostêpny, aby udzielaæ wsparcia na ka¿dym etapie i upewniæ siê, ¿e otrzymujesz odpowiedni¹ pomoc.
+        </li>
+    </ul>
+    W naszej fundacji cenimy ka¿dego, kto potrzebuje wsparcia, i jesteœmy gotowi dostosowaæ siê do indywidualnych potrzeb. Nie wahaj siê skontaktowaæ z nami, jeœli potrzebujesz pomocy – jesteœmy tutaj po to, aby Ciê wesprzeæ.
+    <br>
+</div>

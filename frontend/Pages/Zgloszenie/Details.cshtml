@@ -1,0 +1,44 @@
+﻿@page
+@model frontend.Pages.Zgloszenie.DetailsZgloszenieModel
+@{
+}
+
+
+<h1>Detale</h1>
+
+<div>
+    <h4>Zgloszenie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Zgloszenie.OgloszenieId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Zgloszenie.OgloszenieId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Zgloszenie.WolontariuszId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Zgloszenie.WolontariuszId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Zgloszenie.Ocena)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Zgloszenie.Ocena)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Zgloszenie.Tresc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(Model => Model.Zgloszenie.Tresc)
+        </dd>
+    </dl>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

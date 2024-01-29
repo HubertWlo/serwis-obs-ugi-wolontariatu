@@ -1,0 +1,84 @@
+@page
+@model IndexOgloszenieModel
+@{
+    ViewData["Title"] = "Lista og³oszeñ";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+@using frontend.Models
+@using frontend.Controllers
+
+<h1>Lista og³oszeñ pomocy potrzebuj¹cemu</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nazwa
+            </th>
+            <th>
+                Opis
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                Organizator
+            </th>
+            <th>
+                Lokalizacja
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Ogloszenia) {
+            <tr>
+                <td>
+                   @Html.DisplayFor(modelItem => item.Nazwa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @{
+                        UzytkownikInfo uzytkownik = Model.Uzytkownicy.FirstOrDefault(l => l.Id == item.OrganizatorId);
+                        @uzytkownik.Login
+                        ;
+                    }
+                </td>
+                <td>
+                    @{
+                        LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                        @lokalizacja.Nazwa
+                        ;
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

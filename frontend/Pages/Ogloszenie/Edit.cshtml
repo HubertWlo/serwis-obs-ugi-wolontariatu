@@ -1,0 +1,66 @@
+﻿@page
+@model frontend.Pages.Ogloszenie.EditOgloszenieModel
+@{
+    ViewData["Title"] = "Edycja ogłoszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Edytuj dane ogłoszenia pomocy potrzebującemu</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Ogloszenie.Id" />
+            <div class="form-group">
+                <label asp-for="Ogloszenie.Nazwa" class="control-label"></label>
+                <input asp-for="Ogloszenie.Nazwa" class="form-control" name="nazwa" />
+                <span asp-validation-for="Ogloszenie.Nazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ogloszenie.Opis" class="control-label"></label>
+                <input asp-for="Ogloszenie.Opis" class="form-control" name="opis" />
+                <span asp-validation-for="Ogloszenie.Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ogloszenie.Data" class="control-label"></label>
+                <input asp-for="Ogloszenie.Data" class="form-control" name="data" />
+                <span asp-validation-for="Ogloszenie.Data" class="text-danger"></span>
+            </div>
+            <div id="selectLocationDiv" class="selectLocation" style="display: block;">
+                <div class="form-group">
+                    @Html.DropDownList("lokalizacja", (SelectList)ViewBag.LokalizacjaId, "Wybierz lokalizacje", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </form>
+        <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

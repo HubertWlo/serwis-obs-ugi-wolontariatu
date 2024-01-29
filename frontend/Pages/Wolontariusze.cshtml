@@ -1,0 +1,73 @@
+@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Jak zostaæ wolontariuszem";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+
+Dziêkujemy za zainteresowanie do³¹czeniem do naszej spo³ecznoœci wolontariuszy! Bycie wolontariuszem w naszej fundacji to wyj¹tkowa szansa, aby wnieœæ pozytywny wk³ad w ¿ycie osób potrzebuj¹cych wsparcia. Poni¿ej znajdziesz informacje na temat procesu rejestracji i kroków, które trzeba podj¹æ, aby zostaæ wolontariuszem naszej organizacji.
+<br />
+<ul>
+    <li>
+        <b>
+            Zapoznaj siê z nasz¹ misj¹:
+        </b>
+        <br />
+        Zanim zdecydujesz siê zostaæ wolontariuszem, warto zapoznaæ siê z misj¹ i celami naszej fundacji. SprawdŸ, czy nasze wartoœci i cele s¹ zgodne z Twoimi przekonaniami i pasjami.
+    </li>
+    <li>
+        <b>
+            Przejrzyj dostêpne mo¿liwoœci wolontariackie:
+        </b>
+        <br />
+        Oferujemy ró¿norodne mo¿liwoœci wolontariackie, dostosowane do ró¿nych umiejêtnoœci i zainteresowañ. Przejrzyj dostêpne projekty i programy, aby znaleŸæ tê, która najlepiej odpowiada Twoim umiejêtnoœciom i preferencjom.
+    </li>
+    <li>
+        <b>
+            Skontaktuj siê z nami:
+        </b>
+        <br />
+        Skorzystaj z informacji kontaktowej dostêpnej na naszej stronie. Odpowiemy na Twoje pytania, udzielimy dodatkowych informacji na temat dostêpnych opcji wolontariackich i przeprowadzimy Ciê przez proces rejestracji.
+    </li>
+    <li>
+        <b>
+            Uczestnicz w szkoleniu wolontariuszy:
+        </b>
+        <br />
+        Po zatwierdzeniu Twojej rejestracji, bêdziesz zaproszony(-a) do uczestnictwa w krótkim szkoleniu wolontariuszy. Szkolenie to pomo¿e Ci zrozumieæ nasz¹ misjê, cele oraz zasady i oczekiwania dotycz¹ce roli wolontariusza.
+    </li>
+    <li>
+        <b>
+            Rozpocznij wolontariat:
+        </b>
+        <br />
+        Po zakoñczeniu szkolenia, bêdziesz gotowy(-a) do rozpoczêcia swojej wolontariackiej przygody! Oferujemy ci¹g³e wsparcie i feedback, aby zapewniæ, ¿e Twoje doœwiadczenie jako wolontariusza bêdzie jak najbardziej satysfakcjonuj¹ce.
+    </li>
+    <li>
+        <b>
+            B¹dŸ czêœci¹ naszej spo³ecznoœci:
+        </b>
+        <br />
+        Jako wolontariusz stajesz siê wa¿nym cz³onkiem naszej spo³ecznoœci. Uczestnicz w spotkaniach, wydarzeniach i inicjatywach spo³ecznoœciowych, aby lepiej poznaæ innych wolontariuszy i czuæ siê czêœci¹ naszej inspiruj¹cej rodziny.
+    </li>
+</ul>
+Dziêkujemy za chêæ poœwiêcenia swojego czasu i energii dla dobra innych. 

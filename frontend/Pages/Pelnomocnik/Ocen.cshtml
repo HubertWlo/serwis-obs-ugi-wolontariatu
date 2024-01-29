@@ -1,0 +1,57 @@
+@page
+@using frontend.Models;
+@model OcenPelnomocnikModel
+@{
+    ViewData["Title"] = "Lista og³oszeñ";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Oceñ udzielon¹ pomoc przez wolontariusza</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div id="selectLocationDiv" class="selectLocation" style="display: block;">
+                <div class="form-group">
+                    <label class="control-label">Zaznacz ocenê któr¹ chcesz wystawiæ wolontariuszowi</label>
+                    <select name="ocena">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </form>
+        <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

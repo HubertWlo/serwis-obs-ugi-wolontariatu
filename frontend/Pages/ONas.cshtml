@@ -1,0 +1,92 @@
+@page
+@model ONasModel
+@{
+    ViewData["Title"] = "O nas";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+<h1>@ViewData["Title"]</h1>
+
+Witamy na stronie Fundacji Pomoc, miejscu, gdzie ³¹czymy wolontariuszy z tymi, którzy potrzebuj¹ pomocy. Nasza fundacja powsta³a z misj¹ pomagania osobom starszym oraz tymi z niepe³nosprawnoœciami. Jesteœmy przekonani, ¿e ka¿dy zas³uguje na godne, pe³ne szacunku ¿ycie.
+<br />
+<b>
+    Nasza Misja:
+</b>
+<br />
+Misj¹ Fundacji Pomoc jest dostarczanie wsparcia i konkretnych rozwi¹zañ dla osób znajduj¹cych siê w trudnej sytuacji ¿yciowej. Stawiamy sobie za cel poprawê jakoœci ¿ycia naszych podopiecznych poprzez ró¿norodne programy i projekty spo³eczne.
+<br />
+<b>
+    Co Nas Wyró¿nia:
+</b>
+<ol>
+    <li>
+        <b>
+            Zaanga¿owanie Spo³ecznoœci:
+        </b>
+        <br />
+            Jesteœmy silnie zwi¹zani z lokaln¹ spo³ecznoœci¹, anga¿uj¹c siê w projekty maj¹ce na celu budowanie wiêzi oraz wzajemne wspieranie siê. Tworzymy przestrzeñ, w której ka¿dy mo¿e czuæ siê czêœci¹ wspólnoty.
+    </li>
+    <li>
+        <b>
+            Wszechstronne Dzia³ania:
+        </b>
+        <br />
+        Oferujemy ró¿norodne formy wsparcia, obejmuj¹ce opiekê opiekuñcz¹, dostarczanie posi³ków, a tak¿e programy edukacyjne. D¹¿ymy do pe³nego zrozumienia potrzeb naszych podopiecznych i dostosowania naszych dzia³añ do ich indywidualnych sytuacji.
+    </li>
+    <li>
+        <b>
+            Zaufanie i Transparentnoœæ:
+        </b>
+        <br />
+        Budujemy relacje oparte na zaufaniu i transparentnoœci. Dok³adamy wszelkich starañ, aby nasza dzia³alnoœæ by³a zrozumia³a dla spo³ecznoœci, a wszelkie dzia³ania by³y przeprowadzane w duchu etycznych zasad.
+    </li>
+</ol>
+<b>
+    Jak Mo¿esz Pomóc:
+</b>
+<ol>
+    <li>
+        <b>
+            Wolontariat:
+        </b>
+        <br />
+        Do³¹cz do naszego zespo³u wolontariuszy i b¹dŸ czêœci¹ pozytywnych zmian w spo³ecznoœci.
+    </li>
+    <li>
+        <b>
+            Darowizny:
+        </b>
+        <br />
+        Twoje wsparcie finansowe pozwoli nam realizowaæ kolejne projekty i pomagaæ coraz wiêkszej liczbie osób.
+    </li>
+    <li>
+        <b>
+            Œwiadomoœæ Spo³eczna:
+        </b>
+        <br />
+        Dziel siê naszymi dzia³aniami z innymi, aby zwiêkszyæ œwiadomoœæ i mobilizowaæ do wspólnego dzia³ania na rzecz tych, którzy potrzebuj¹ wsparcia.
+    </li>
+</ol>
+<br />
+Dziêkujemy, ¿e jesteœ z nami w tym wspólnym dziele pomagania.
+
+
+
+

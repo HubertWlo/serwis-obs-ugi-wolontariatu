@@ -1,0 +1,110 @@
+@page
+@using frontend.Models;
+@model MojeOgloszeniaWolontariuszModel
+@{
+    ViewData["Title"] = "Moje Og³oszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+
+
+<section>
+    <h2>Aktywne Ogloszenia</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Lokalizacja
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Ogloszenia)
+                {
+                    <tr>
+                        @if (DateTime.Now < item.Data && item.WolontariuszId == int.Parse(id))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nazwa)
+                            </td>
+                            <td>
+                                @{
+                                    LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                                    @lokalizacja.Nazwa;
+                                }
+                            </td>
+                            <td>
+                                <a asp-page="/Ogloszenie/Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Zakonczone Ogloszenia</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Lokalizacja
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Ogloszenia)
+                {
+                    <tr>
+                        @if (DateTime.Now > item.Data && item.WolontariuszId == int.Parse(id))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nazwa)
+                            </td>
+                            <td>
+                                @{
+                                    LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                                    @lokalizacja.Nazwa;
+                                }
+                            </td>
+                            <td>
+                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>

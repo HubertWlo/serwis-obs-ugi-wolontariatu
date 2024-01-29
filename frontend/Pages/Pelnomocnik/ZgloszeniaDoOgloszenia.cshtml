@@ -1,0 +1,74 @@
+﻿@page
+@using Models
+@using Controllers
+@model frontend.Pages.Pelnomocnik.ZgloszeniaDoOgloszeniaModel
+@{
+    ViewData["Title"] = "Zgłoszenia do ogłoszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Zgłoszenia do ogłoszenia</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Zgłoszony wolontariusz
+            </th>
+            <th>
+                Tresc
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Zgloszenia)
+        {
+            <tr>
+                <td>
+                    @{
+                        if (int.TryParse(id, out int userIdInt))
+                        {
+                            UzytkownikInfo uzytkownik = Model.Uzytkownicy.FirstOrDefault(l => l.Id == item.WolontariuszId);
+                            @uzytkownik.Login
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tresc)
+                </td>
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <button class="btn btn-primary" type="submit" style="float: left">Przypisz</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+</table>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

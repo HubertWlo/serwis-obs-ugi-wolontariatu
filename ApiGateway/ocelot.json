@@ -1,0 +1,159 @@
+{
+  "Routes": [
+    // ogloszenia CRUD Web API
+    {
+      "UpstreamPathTemplate": "/api/Items",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ogloszeniabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/items"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Items/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ogloszeniabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Items/{id}"
+    },
+    // ogloszenia Opiekun Web API
+    {
+      "UpstreamPathTemplate": "/api/ItemsOpiekun/{opiekunID}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ogloszeniabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ItemsOpiekun/{opiekunID}"
+    },
+    // ogloszenia Wolontariusz Web API
+    {
+      "UpstreamPathTemplate": "/api/ItemsWolontariusz/{wolontariuszId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ogloszeniabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ItemsWolontariusz/{wolontariuszId}"
+    },
+    // lokalizacja Web API
+    {
+      "UpstreamPathTemplate": "/api/Lokalizacja",
+      "UpstreamHttpMethod": [ "Get", "Post"],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "lokalizacjabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Lokalizacja"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Lokalizacja/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "lokalizacjabackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Lokalizacja/{id}"
+    },
+    // uzytkownicy Web API
+    {
+      "UpstreamPathTemplate": "/api/Uzytkownik",
+      "UpstreamHttpMethod": [ "Get", "Post"],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "uzytkownicybackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Uzytkownik"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Uzytkownik/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "uzytkownicybackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Uzytkownik/{id}"
+    },
+    // zgloszenie CRUD Web API
+    {
+      "UpstreamPathTemplate": "/api/Zgloszenie",
+      "UpstreamHttpMethod": [ "Get", "Post"],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "zgloszeniebackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Zgloszenie"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Zgloszenie/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "zgloszeniebackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Zgloszenie/{id}"
+    },
+    // zgloszenie Opiekun Web API
+    {
+      "UpstreamPathTemplate": "/api/ZgloszenieOpiekun/{ogloszenieId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "zgloszeniebackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ZgloszenieOpiekun/{ogloszenieId}"
+    },
+    // zgloszenie Wolontariusz Web API
+    {
+      "UpstreamPathTemplate": "/api/ZgloszenieWolontariusz/{wolontariuszId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "zgloszeniebackend",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ZgloszenieWolontariusz/{wolontariuszId}"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:8000"
+  }
+}

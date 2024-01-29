@@ -1,0 +1,143 @@
+version: '3.4'
+
+networks:
+    backend:
+    frontend:
+
+services:
+    ogloszeniabackend:
+        image: ${DOCKER_REGISTRY-}ogloszeniabackend
+        build:
+            context: .
+            dockerfile: ogloszeniaBackend/Dockerfile
+        depends_on:
+            - Database
+        environment:
+            - DB_HOST=sql_server_container
+            - DB_NAME=ogloszenieBackend
+            - DB_PASSWORD=P@ssw0rd
+        networks:
+            - backend
+
+    lokalizacjabackend:
+        image: ${DOCKER_REGISTRY-}lokalizacjabackend
+        build:
+            context: .
+            dockerfile: lokalizacjaBackend/Dockerfile
+        depends_on:
+            - Database
+        environment:
+            - DB_HOST=sql_server_container
+            - DB_NAME=lokalizacjaBackend
+            - DB_PASSWORD=P@ssw0rd
+        networks:
+            - backend
+    
+    zgloszeniebackend:
+        image: ${DOCKER_REGISTRY-}zgloszeniebackend
+        build:
+            context: .
+            dockerfile: zgloszenieBackend/Dockerfile
+        depends_on:
+            - Database
+        environment:
+            - DB_HOST=sql_server_container
+            - DB_NAME=zgloszenieBackend
+            - DB_PASSWORD=P@ssw0rd
+        networks:
+            - backend
+
+    uzytkownicybackend:
+        image: ${DOCKER_REGISTRY-}uzytkownicybackend
+        build:
+            context: .
+            dockerfile: uzytkownicyBackend/Dockerfile
+        depends_on:
+            - Database
+        environment:
+            - DB_HOST=sql_server_container
+            - DB_NAME=uzytkownicyBackend
+            - DB_PASSWORD=P@ssw0rd
+        networks:
+            - backend
+
+    #oglosznieDatabase:
+    #    container_name: ogloszenie_sql_server_container
+    #    image: mcr.microsoft.com/mssql/server:2019-latest
+    #    ports:
+    #        - 5000:1433
+    #    environment:
+    #        - ACCEPT_EULA=Y
+    #        - SA_PASSWORD=P@ssw0rd
+    #    networks:
+    #        - backend
+
+    #lokalizacjaDatabase:
+    #    container_name: lokalizacja_sql_server_container
+    #    image: mcr.microsoft.com/mssql/server:2019-latest
+    #    ports:
+    #        - 5001:1433
+    #    environment:
+    #        - ACCEPT_EULA=Y
+    #        - SA_PASSWORD=P@ssw0rd
+    #    networks:
+    #        - backend
+    
+    #zgloszenieDatabase: 
+    #    container_name: zgloszenie_sql_server_container
+    #    image: mcr.microsoft.com/mssql/server:2019-latest
+    #    ports:
+    #        - 5002:1433
+    #    environment:
+    #        - ACCEPT_EULA=Y
+    #        - SA_PASSWORD=P@ssw0rd
+    #    networks:
+    #        - backend
+
+    #uzytkownikDatabase: 
+    #    container_name: uzytkownik_sql_server_container
+    #    image: mcr.microsoft.com/mssql/server:2019-latest
+    #    ports:
+    #        - 5003:1433
+    #    environment:
+    #        - ACCEPT_EULA=Y
+    #        - SA_PASSWORD=P@ssw0rd
+    #    networks:
+    #        - backend
+
+    Database: 
+        container_name: sql_server_container
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - 5001:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=P@ssw0rd
+        networks:
+            - backend
+
+    apigateway:
+        container_name: api-gateway
+        image: ${DOCKER_REGISTRY-}apigateway
+        build:
+            context: .
+            dockerfile: ApiGateway/Dockerfile
+        networks:
+            - backend
+            - frontend
+        ports:
+            - 8000:80
+    frontend:
+        container_name: frontend
+        image: ${DOCKER_REGISTRY-}frontend
+        build:
+            context: .
+            dockerfile: frontend/Dockerfile
+        ports:
+            - 8002:80
+        networks:
+            - frontend
+        environment: 
+           - apigatewayUrl=http://host.docker.internal:8000
+        depends_on: 
+           - apigateway

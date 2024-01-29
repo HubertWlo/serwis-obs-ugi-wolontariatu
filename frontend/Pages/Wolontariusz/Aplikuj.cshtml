@@ -1,0 +1,103 @@
+﻿@page
+@using frontend.Models;
+@using frontend.Controllers
+@model frontend.Pages.Wolontariusz.AplikujWolontariuszModel
+@{
+    ViewData["Title"] = "Aplikuj";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+
+<section>
+    <h2>Ogłoszenie  do którego się zgłaszasz</h2>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Nazwa ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Nazwa)
+            </dd>
+           <dt class="col-sm-2">
+                Opis ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Opis)
+            </dd>
+            <dt class="col-sm-2">
+                Data ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Data)
+            </dd>
+            <dt class="col-sm-2">
+                Osoba potrzebująca
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    if (int.TryParse(id, out int userIdInt))
+                    {
+                        UzytkownikInfo uzytkownik = Model.Uzytkownicy.FirstOrDefault(l => l.Id == Model.Ogloszenie.OrganizatorId);
+                        ViewData["osoba"] = @uzytkownik.Login
+                        ;
+                    }
+                }
+                @ViewData["osoba"]
+            </dd>
+            <dt class="col-sm-2">
+                Nazwa lokalizacji
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    LokalizacjaInfo lokalizacja = Model.Lokalizacja.FirstOrDefault(l => l.Id == Model.Ogloszenie.LokalizacjaId);
+                    @lokalizacja.Nazwa
+                    ;
+                }
+            </dd>
+        </dl>
+    </div>
+</section>
+
+<section>
+    <h2>Wypełnij formularz zgłoszenia chęci pomocy</h2>
+    <div class="row">
+        <div class="col-md-7">
+            <form method="post">
+                <div class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Zgloszenie.Tresc" class="control-label"></label>
+                    <input type="text" name="tresc" class="form-control" />
+                    <span asp-validation-for="Zgloszenie.Tresc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Aplikuj</button>
+                </div>
+            </form>
+            <button onclick="goBack()" class="btn btn-primary">Powrót</button
+        </div>
+    </div>
+</section>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

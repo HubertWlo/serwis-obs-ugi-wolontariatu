@@ -1,0 +1,68 @@
+﻿@page
+@model frontend.Pages.Lokalizacja.DeleteLokalizacjaModel
+@{
+    ViewData["Title"] = "Usuwanie lokalizacji";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Na pewno chcesz usunąć lokalizację świadczenia usługi?</h1>
+
+<div>
+    <form method="post">
+    <h4>Lokalizacja</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Lokalizacja.Nazwa)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Lokalizacja.Nazwa)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Lokalizacja.Miasto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Lokalizacja.Miasto)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Lokalizacja.DlugoscGeo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Lokalizacja.DlugoscGeo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Lokalizacja.SzerokoscGeo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Lokalizacja.SzerokoscGeo)
+        </dd>
+    </dl>
+        <input type="hidden" name="Id" value="@Model.Lokalizacja.Id" />
+        <button class="btn btn-danger" type="submit" style="float: left">Usuń</button>
+    </form>
+    <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -1,0 +1,121 @@
+@page
+@using frontend.Models;
+@model MojeOgloszeniaPelnomocnikModel
+@{
+    ViewData["Title"] = "Lista og³oszeñ";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+
+<section>
+    <h2>Moje aktywne og³oszenia</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Lokalizacja
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Ogloszenia)
+                {
+                    <tr>
+                        @if (Request.Cookies.TryGetValue("UserId", out string userId) && int.TryParse(userId, out int userIdInt))
+                        {
+                            @if (DateTime.Now < item.Data && item.OrganizatorId == userIdInt)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nazwa)
+                                </td>
+                                <td>
+                                    @{
+                                        LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                                        @lokalizacja.Nazwa;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-page="/Ogloszenie/Edit" asp-route-id="@item.Id" class="btn btn-primary">Edytuj og³oszenie</a>
+                                    <a asp-page="/Ogloszenie/Details" asp-route-id="@item.Id" class="btn btn-primary">Szczegó³y og³oszenia</a>
+                                    <a asp-page="./ZgloszeniaDoOgloszenia" asp-route-id="@item.Id" class="btn btn-primary">Wyœwietl zg³oszenia</a>
+                                    <a asp-page="/Ogloszenie/Delete" asp-route-id="@item.Id" class="btn btn-primary">Usuñ og³oszenia</a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Moje zakoñczone og³oszenia</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                <th>
+                    Lokalizacja
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Ogloszenia)
+                {
+                    <tr>
+                        @if (Request.Cookies.TryGetValue("UserId", out string userId) && int.TryParse(userId, out int userIdInt))
+                        {
+                            @if (DateTime.Now > item.Data && item.OrganizatorId == userIdInt)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Nazwa)
+                                </td>
+                                <td>
+                                    @{
+                                        LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                                        @lokalizacja.Nazwa
+                                        ;
+                                    }
+                                </td>
+                                <td>
+                                    <a asp-page="./Ocen" asp-route-id="@item.Id" class="btn btn-primary">Oceñ pomoc wolontariusza</a>
+                                    <a asp-page="/Ogloszenie/Details" asp-route-id="@item.Id" class="btn btn-primary">Szczegó³y og³oszenia</a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>

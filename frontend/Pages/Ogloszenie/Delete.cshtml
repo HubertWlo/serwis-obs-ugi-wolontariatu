@@ -1,0 +1,91 @@
+﻿@page
+@using frontend.Models;
+@using frontend.Controllers
+@model frontend.Pages.Ogloszenie.DeleteOgloszenieModel
+@{
+    ViewData["Title"] = "Usuwanie ogłoszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Na pewno chcesz usunąć ogłoszenie pomocy potrzebującemu?</h1>
+<div>
+    <h4>Ogloszenie pomocy potrzebującemu</h4>
+    <hr />
+    <form method="post">
+        <dl class="row">
+            <dt class="col-sm-2">
+                Nazwa ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Nazwa)
+            </dd>
+            <dt class="col-sm-2">
+                Opis ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Opis)
+            </dd>
+            <dt class="col-sm-2">
+                Data ogłoszenia
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(Model => Model.Ogloszenie.Data)
+            </dd>
+            <dt class="col-sm-2">
+                Przypisany wolontariusz
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    if (int.TryParse(id, out int userIdInt) && userIdInt != Model.Ogloszenie.WolontariuszId)
+                    {
+                        UzytkownikInfo uzytkownik = Model.Uzytkownicy.FirstOrDefault(l => l.Id == Model.Ogloszenie.WolontariuszId);
+                        ViewData["wolontariusz"] = @uzytkownik.Login
+                        ;
+                    }
+                    else
+                    {
+                        ViewData["wolontariusz"] = "Nie przypisano wolontairusza";
+                    }
+                }
+                @ViewData["wolontariusz"]
+            </dd>
+            <dt class="col-sm-2">
+                Nazwa lokalizacji świadczenia usługi
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    LokalizacjaInfo lokalizacja = Model.Lokalizacja.FirstOrDefault(l => l.Id == Model.Ogloszenie.LokalizacjaId);
+                    @lokalizacja.Nazwa
+                    ;
+                }
+            </dd>
+        </dl>
+        <input type="hidden" name="Id" value="@Model.Ogloszenie.Id" />
+        <button class="btn btn-danger" type="submit" style="float: left">Usuń</button>
+    </form>
+    <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

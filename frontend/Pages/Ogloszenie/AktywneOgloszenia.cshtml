@@ -1,0 +1,154 @@
+@page
+@using frontend.Models
+@using frontend.Controllers
+@model AktywneOgloszeniaOgloszenieModel
+@{
+    ViewData["Title"] = "Aktywne og³oszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "_Layout";
+    }
+}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<section>
+    <h2>Aktywne og³oszenia pomocy potrzebuj¹cemu</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nazwa
+                </th>
+                @if (Request.Cookies.TryGetValue("UserRole", out string u) && "Wolontariusz" == u)
+                 {
+                    <th>
+                        Treœæ
+                    </th>
+                }
+                <th>
+                    Lokalizacja
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                @foreach (var item in Model.Ogloszenia)
+                {
+                    <tr>
+                        @if (DateTime.Now < item.Data)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nazwa)
+                            </td>
+                             @if (u != null)
+                             {
+                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Opis)
+                                </td>
+                             }
+                            <td>
+                                @{
+                                    LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+                                    @lokalizacja.Nazwa
+                                    ;
+                                }
+                            </td>
+                            @if (Request.Cookies.TryGetValue("UserRole", out string w) && "Wolontariusz" == w)
+                            {
+                                <td>
+                                    <a asp-page="/Wolontariusz/Aplikuj" asp-route-id="@item.Id" class="btn btn-primary" style="float: left">Aplikuj</a>
+                                </td>
+                            }
+                            @if (Request.Cookies.TryGetValue("UserRole", out string p) && "Pracownik" == p)
+                            {
+                                <td>
+                                    <a asp-page="/Ogloszenie/Edit" asp-route-id="@item.Id" class="btn btn-primary" style="float: left">Edytuj og³oszenie</a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <div class="row">
+        <h4>Zaznacz lokalizacje na mapie</h4>
+    </div>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+</section>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+    var map = L.map('map').setView([52.2695055242, 21.0584802219], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var layerControl = L.control.layers().addTo(map);
+
+    var aktywneOgloszenia = L.layerGroup([]);
+    @if (Model != null)
+    {
+        @foreach (var item in Model.Ogloszenia)
+        {
+            if (DateTime.Now < item.Data)
+            {
+                LokalizacjaInfo lokalizacja = Model.Lokalizacje.FirstOrDefault(l => l.Id == item.LokalizacjaId);
+
+                <text>
+                            var DlugoscGeo = parseFloat("@lokalizacja.DlugoscGeo".replace(',', '.'));
+                var SzerokoscGeo = parseFloat("@lokalizacja.SzerokoscGeo".replace(',', '.'));
+                var pozycja = L.marker([DlugoscGeo, SzerokoscGeo]).addTo(map);
+                aktywneOgloszenia.addLayer(pozycja);
+
+                var detailsUrl = '@Url.Action("Details", "Ogloszenie", new { id = item.Id})';
+
+                var popupContent = document.createElement('div');
+
+                popupContent.innerHTML = `
+                                            <b>@item.Nazwa </b><br>
+                                            <b>Lokazlizacja: </b>@lokalizacja.Nazwa <br>
+                                            <a asp-page="./Details" asp-route-id="@item.Id">Szczegó³y og³oszenia</a>
+                                            `;
+
+                pozycja.bindPopup(popupContent);
+
+                </text>
+            }
+        }
+
+    }
+        layerControl.addOverlay(aktywneOgloszenia, "Aktywne ogloszenia");
+</script>

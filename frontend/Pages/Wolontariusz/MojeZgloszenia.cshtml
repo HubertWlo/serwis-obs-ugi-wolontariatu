@@ -1,0 +1,61 @@
+@page
+@using frontend.Models;
+@model MojeZgloszeniaWolontariuszModel
+@{
+    ViewData["Title"] = "Moje zg³oszenia";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        Layout = "~/Pages/Shared/_Layout.cshtml";
+    }
+}
+
+<h1>Moje zg³oszenia chêci pomocy</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nazwa og³oszenia
+            </th>
+            <th>
+                Treœæ zg³oszenia
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Zgloszenia)
+        {
+            <tr>
+                <td>
+                    @{
+                        OgloszenieInfo ogloszenie = Model.Ogloszenia.FirstOrDefault(l => l.Id == item.OgloszenieId);
+                        @ogloszenie.Nazwa;
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tresc)
+                </td>
+                <td>
+                    <a asp-page="/Zgloszenie/Edit" asp-area="" asp-route-id="@item.Id" class="btn btn-primary" style="float: left">Edytuj treœæ zg³oszenia</a>
+                    <a asp-page="/Zgloszenie/Delete" asp-area="" asp-route-id="@item.Id" class="btn btn-primary" style="float: left">Wycofaj zg³oszenie</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

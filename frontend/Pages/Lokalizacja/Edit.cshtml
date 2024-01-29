@@ -1,0 +1,66 @@
+﻿@page
+@model frontend.Pages.Lokalizacja.EditLokalizacjaModel
+@{
+    ViewData["Title"] = "Edycja lokalizacji";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+<h1>Edytuj dane lokalizacji świadczenia usługi</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Lokalizacja.Id" />
+            <div class="form-group">
+                <label asp-for="Lokalizacja.Nazwa" class="control-label"></label>
+                <input asp-for="Lokalizacja.Nazwa" class="form-control" name="nazwa" />
+                <span asp-validation-for="Lokalizacja.Nazwa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lokalizacja.Miasto" class="control-label"></label>
+                <input asp-for="Lokalizacja.Miasto" class="form-control" name="miasto" />
+                <span asp-validation-for="Lokalizacja.Miasto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lokalizacja.DlugoscGeo" class="control-label"></label>
+                <input asp-for="Lokalizacja.DlugoscGeo" class="form-control" name="dlugosc" />
+                <span asp-validation-for="Lokalizacja.DlugoscGeo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lokalizacja.SzerokoscGeo" class="control-label"></label>
+                <input asp-for="Lokalizacja.SzerokoscGeo" class="form-control" name="szerokosc"></input>
+                <span asp-validation-for="Lokalizacja.SzerokoscGeo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </form>
+        <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

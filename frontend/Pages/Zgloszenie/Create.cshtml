@@ -1,0 +1,79 @@
+@page
+@model CreateZgloszenieModel
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<h1>Create</h1>
+
+<h4>Zgloszenie</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Zgloszenie.OgloszenieId" class="control-label"></label>
+                <input asp-for="Zgloszenie.OgloszenieId" class="form-control" />
+                <span asp-validation-for="Zgloszenie.OgloszenieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zgloszenie.WolontariuszId" class="control-label"></label>
+                <input asp-for="Zgloszenie.WolontariuszId" class="form-control" />
+                <span asp-validation-for="Zgloszenie.WolontariuszId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zgloszenie.Ocena" class="control-label"></label>
+                <input asp-for="Zgloszenie.Ocena" class="form-control" />
+                <span asp-validation-for="Zgloszenie.Ocena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zgloszenie.Tresc" class="control-label"></label>
+                <input asp-for="Zgloszenie.Tresc" class="form-control" />
+                <span asp-validation-for="Zgloszenie.Tresc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Utwórz og³oszenie</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <br />
+    <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+</div>
+
+<p id="output"></p>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    const addLocationRadio = document.getElementById('addLocation');
+    const selectLocationRadio = document.getElementById('selectLocation');
+    const newLocationInput = document.getElementById('newLocationDiv');
+    const locationsSelect = document.getElementById('selectLocationDiv');
+
+    addLocationRadio.addEventListener('change', function () {
+        if (addLocationRadio.checked) {
+            newLocationInput.style.display = 'block';
+            locationsSelect.style.display = 'none';
+        }
+    });
+
+    selectLocationRadio.addEventListener('change', function () {
+        if (selectLocationRadio.checked) {
+            newLocationInput.style.display = 'none';
+            locationsSelect.style.display = 'block';
+        }
+    });
+</script>

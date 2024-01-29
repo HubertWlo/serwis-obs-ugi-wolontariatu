@@ -1,0 +1,62 @@
+﻿@page
+@model frontend.Pages.Uzytkownik.DeleteUzytkownikModel
+@{
+    ViewData["Title"] = "Usuwanie użytkownika";
+    if (Request.Cookies.TryGetValue("UserId", out string id) && Request.Cookies.TryGetValue("UserRole", out string rola))
+    {
+        if (rola == "Wolontariusz")
+        {
+            Layout = "_Layout_wolontariusz";
+        }
+        else if (rola == "Pracownik")
+        {
+            Layout = "_Layout_pracownik";
+        }
+        else if (rola == "Opiekun")
+        {
+            Layout = "_Layout_opiekun";
+        }
+    }
+    else
+    {
+        RedirectToPage("./Index");
+    }
+}
+
+
+<h1>Na pewno chcesz usunąć konto?</h1>
+
+<div>
+    <form method="post">
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Uzytkownik.Login)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Uzytkownik.Login)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Uzytkownik.Haslo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Uzytkownik.Haslo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(Model => Model.Uzytkownik.Rola)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(Model => Model.Uzytkownik.Rola)
+        </dd>
+    </dl>
+        <input type="hidden" name="id" value="@Model.Uzytkownik.Id" />
+        <button class="btn btn-danger" type="submit" style="float: left">Usuń</button>
+    </form>
+    <button onclick="goBack()" class="btn btn-primary">Powrót</button>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
